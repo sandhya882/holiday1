@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #div1,#div2{
+            border-radius: 10%;
+            height: 350px;
+            width: 250px;
+            border: 2px solid;
+        
+        }
+        #div1{
+            background-color: rgb(223, 139, 198);
+            position: relative;
+            left:1000px;
+            top: 200px;
+        }
+        #div2{
+            background-color: aquamarine;
+            position: relative;
+            top: 150px;
+            left:1400px;
+            bottom: 250px;
+        }
+        #btn1{
+            height: 30px;
+            position: relative;
+            top:80px;
+            left: 1000px;
+        }
+        #btn2{
+            height: 30px;;
+            position: relative;
+            top:80px;
+            left: 1200px;
+        }
+        body{
+            background-size: cover;
+            background-image: url(https://img.freepik.com/premium-photo/abstract-purple-red-background-with-subtle-flowers-rangoli-pattern_1097558-6948.jpg);
+        }
+        #para{
+            font-size: 20px;
+            font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            color:rgb(74, 4, 139);
+            
+        }
+        .para1{
+            font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            font-size: 30px;
+            color: chocolate;
+        }
+    
+    </style>
+</head>
+<body>
+   
+    <button id="btn1" onclick="funone()">click for current_weather_units</button>
+    <button id="btn2" onclick="funtwo()">click for current_weather</button>
+
+    
+    
+    <div id="div1"></div>
+    <div id="div2"></div>
+    
+
+
+
+<script>
+  let div1=document.getElementById("div1");
+  let div2=document.getElementById("div2");
+const URL="https://api.open-meteo.com/v1/forecast?latitude=35.6895&longitude=139.6917&current_weather=true";
+function funone(){
+fetch(URL).then(Response=>Response.json())
+.then(data=>{
+    let obj=data;
+    for(let nordata in obj){
+
+        let innerobj=obj[nordata];
+        console.log(nordata);
+       if(nordata=="current_weather_units")
+        for(var intdata in innerobj){
+            let p=document.createElement("p")
+            p.innerHTML=(`${intdata} :  ${ innerobj[intdata]}`)
+            p.id="para"
+            div1.appendChild(p)
+            document.body.appendChild(div1)
+            //if(intdata=="time")
+            //console.log(intdata +":",innerobj[intdata])
+        }
+    
+    }
+})
+}
+
+
+/*const obj = {
+  name: 'Bob',
+  age: 23,
+  city: 'Mexico',
+};
+
+for (const [key, value] of Object.entries(obj)) {
+  console.log(key, '=>', value)
+}*/
+function funtwo(){
+    fetch(URL).then(Response=>Response.json())
+.then(data=>{
+    let obj=data;
+    for(let nordata in obj){
+        let innerobj=obj[nordata];
+       // console.log(innerobj);
+       if(nordata=="current_weather")
+        for(var intdata in innerobj){
+            let p1=document.createElement("p")
+            if(intdata=="temperature"){
+           p1.innerHTML=( `${intdata} :  ${ innerobj[intdata]}`)
+            p1.className="para1"}
+            
+            let p2=document.createElement("p")
+            if(intdata=="windspeed")
+            p2.innerHTML=(`${intdata} :  ${ innerobj[intdata]}` )
+            p2.style.fontSize="20px"
+            p2.style.color="blue"
+            div2.appendChild(p1)
+            div2.appendChild(p2)
+            document.body.appendChild(div2)
+            
+        }
+    
+    }
+   
+})
+}
+fetch(URL).then(Response=>Response.json())
+.then(data=>{
+    let obj=data;
+    for(let nordata in obj){
+        let innerobj=obj[nordata];
+        let p3=document.createElement("p")
+        if( nordata=="latitude"){
+        p3.innerHTML=( `${nordata} = ${innerobj} `)
+        p3.style.fontSize="25px"
+        p3.style.color="green"
+        
+    }
+
+        div2.appendChild(p3)
+        document.body.appendChild(div2)
+    }
+})
+
+
+//})
+</script>
+<script>
+ /*   .then(data=>{data.forEach(Element=>{let p=document.createElement("p")
+p.innerText=element["latitude"];
+document.body.appendChild(p);
+
+
+
+for (let element in data)
+{
+	let innerElement = data[element];
+	
+	for (let innerData in innerElement)
+	{
+		if (innerData !== "at")
+		{
+			let internalData = innerElement[innerData];
+
+			for (let x in internalData)
+			{
+				console.log(x,internalData[x]);
+			}
+		}
+	}
+}
+
+for(let exchange in data) {
+    var ticker = data[exchange]["ticker"];
+    console.log(ticker);
+    // maybe here you can creare row of a table? (example)
+}
+
+*/
+</script>
+</body>
+</html>
